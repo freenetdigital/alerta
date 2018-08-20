@@ -31,6 +31,8 @@ def parse_grafana(alert, match, args):
     service = args.get('service', 'Grafana')
 
     attributes = match.get('tags', None) or dict()
+    attributes = {k.replace('.', '_'):v for (k, v) in attributes.items()}
+
     attributes['ruleId'] = str(alert['ruleId'])
     if 'ruleUrl' in alert:
         attributes['ruleUrl'] = '<a href="%s" target="_blank">Rule</a>' % alert['ruleUrl']
